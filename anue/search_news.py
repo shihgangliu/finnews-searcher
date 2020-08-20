@@ -12,7 +12,7 @@ class MainHandler(tornado.web.RequestHandler):
     client = Elasticsearch()
 
     def get(self):
-        self.render("index.html", is_searched=False)
+        self.render("index.html", response=None)
 
     def post(self):
         input_text = self.get_body_argument(name="my_query")
@@ -21,7 +21,7 @@ class MainHandler(tornado.web.RequestHandler):
         s = Search(using=self.client, index=ES_INDEX).query(q)
         response = s.execute()
 
-        self.render("index.html", is_searched=True, response=response)
+        self.render("index.html", response=response)
 
 
 if __name__ == "__main__":
